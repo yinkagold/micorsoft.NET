@@ -152,3 +152,76 @@ class Program
 	}
 
 }
+/// <summary>
+/// Write a program and ask the user to enter a few numbers separated by a hyphen. If the user simply 
+/// presses Enter without supplying an input, exit immediately; otherwise, check to see if there are 
+/// any duplicates. If so, display "Duplicate" on the console.
+/// </summary>
+ class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.Write("Enter a few numbers (eg 1-2-3-4): ");
+            var input = Console.ReadLine();
+
+            if (String.IsNullOrWhiteSpace(input))
+                return;
+
+            var numbers = new List<int>();
+            foreach (var number in input.Split('-'))
+                numbers.Add(Convert.ToInt32(number));
+
+            var result = ContainsDuplicates(numbers);
+            Console.WriteLine(result);
+        }
+
+        public static bool ContainsDuplicates(List<int> numbers)
+        {
+            var uniques = new List<int>();
+            foreach (var number in numbers)
+            {
+                if (!uniques.Contains(number))
+                    uniques.Add(number);
+                else
+                    return true;
+            }
+
+            return false;
+        }
+
+
+    }
+ /// <summary>
+/// Write a program and ask the user to enter a few numbers separated by a hyphen. Work out 
+/// if the numbers are consecutive. For example, if the input is "5-6-7-8-9" or "20-19-18-17-16", 
+/// display a message: "Consecutive"; otherwise, display "Not Consecutive".
+/// </summary>
+class Program
+{
+	static void Main(string[] args)
+	{
+		Console.Write("Enter a few numbers (eg 1-2-3-4): ");
+		var input = Console.ReadLine();
+
+		var numbers = new List<int>();
+		foreach (var number in input.Split('-'))
+			numbers.Add(Convert.ToInt32(number));
+
+		var result = IsConsecutiveList(numbers);
+		Console.WriteLine(result);
+	}
+	public static bool IsConsecutiveList(List<int> list)
+	{
+		var numbers = new int[list.Count];
+		list.CopyTo(numbers);
+		Array.Sort(numbers);
+
+		for (var i = 1; i < numbers.Length; i++)
+		{
+			if (numbers[i] != numbers[i - 1] + 1)
+				return false;
+		}
+
+		return true;
+	}
+}
